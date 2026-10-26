@@ -194,7 +194,23 @@ export function expandBriefly(): () => void {
   };
 }
 
+let hoverRestore: (() => void) | null = null;
+
+/** Shows the full column while the pointer rests on the rail. */
+export function expandForHover() {
+  if (hoverRestore || mode !== "compact" || panelExtent > 0) return;
+  hoverRestore = expandBriefly();
+}
+
+/** Puts the rail back after a hover, unless a shape was chosen meanwhile. */
+export function collapseAfterHover() {
+  const restore = hoverRestore;
+  hoverRestore = null;
+  restore?.();
+}
+
 export function toggleMode() {
+  hoverRestore = null;
   cancelSidebarResize();
   desiredMode = desiredMode === "compact" ? "default" : "compact";
   setMode(desiredMode);
