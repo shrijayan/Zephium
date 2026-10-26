@@ -213,7 +213,10 @@ export function toggleMode() {
   hoverRestore = null;
   cancelSidebarResize();
   desiredMode = desiredMode === "compact" ? "default" : "compact";
-  setMode(desiredMode);
+  // A toggle while hover-expanded already shows the chosen shape; it only
+  // needs saving.
+  if (desiredMode === mode) save(desiredMode);
+  else setMode(desiredMode);
 }
 
 /**

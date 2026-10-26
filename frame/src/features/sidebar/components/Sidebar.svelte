@@ -170,6 +170,19 @@
     clearTimeout(hoverTimer);
     hoverTimer = setTimeout(collapseAfterHover, HOVER_CLOSE_MS);
   }
+  // Work, a tool or the preference turning off while the pointer stays put
+  // gets no leave, so drop a pending or open hover expansion here.
+  $effect(() => {
+    const eligible =
+      preferences.value("sidebar.hover-expand") === "true" &&
+      !railPage &&
+      tools.activeTool() === null;
+    untrack(() => {
+      if (eligible) return;
+      clearTimeout(hoverTimer);
+      collapseAfterHover();
+    });
+  });
   $effect(() => () => {
     clearTimeout(hoverTimer);
     collapseAfterHover();

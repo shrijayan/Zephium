@@ -342,7 +342,12 @@ mod tests {
         assert!(value_allowed("ui.text-size", "large"));
         assert!(value_allowed("ui.tab-layout", "horizontal"));
         assert!(value_allowed("onboarding", "done"));
-        for key in ["ai.enabled", "work.enabled", "work.screenshots"] {
+        for key in [
+            "ai.enabled",
+            "work.enabled",
+            "work.screenshots",
+            "sidebar.hover-expand",
+        ] {
             assert!(KEYS.contains(&key));
             assert!(value_allowed(key, "true"));
             assert!(value_allowed(key, "false"));
